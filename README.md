@@ -15,7 +15,7 @@ graph LR
     A((EmonESP)) -- HTTP --> E(grafana);
 ```
 
-EmonESP publishing data to mosquitto MQTT server. [mqtt2prometheus]([GitHub - hikhvar/mqtt2prometheus: MQTT to Prometheus gateway](https://github.com/hikhvar/mqtt2prometheus)) is subscribed to EmonESP topics and  exports received data for prometheus which stores it as time series data. Grafana uses prometheus as data source to read historical power usage and calculate avg energy consumption and cost for period of time. Grafana also uses EmonESP API to query and display latest measured data and device status.
+EmonESP publishing data to mosquitto MQTT server. [mqtt2prometheus](https://github.com/hikhvar/mqtt2prometheus) is subscribed to EmonESP topics and  exports received data for prometheus which stores it as time series data. Grafana uses prometheus as data source to read historical power usage and calculate avg energy consumption and cost for period of time. Grafana also uses EmonESP API to query and display latest measured data and device status.
 
 ## Installation
 
