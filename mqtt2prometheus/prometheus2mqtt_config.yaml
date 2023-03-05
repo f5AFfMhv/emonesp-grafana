@@ -1,0 +1,69 @@
+mqtt:
+  # The MQTT broker to connect to
+  server: tcp://mosquitto:1883
+  # Optional: Username and Password for authenticating with the MQTT Server
+  #user:
+  #password:
+
+  # Optional: Used to specify ClientID. The default is <hostname>-<pid>
+  client_id: emonESP
+  # The Topic path to subscribe to. Be aware that you have to specify the wildcard, if you want to follow topics for multiple sensors.
+  topic_path: emon/emonesp/+
+  metric_per_topic_config:
+    metric_name_regex: "emon/emonesp/(?P<metricname>.*)"
+  # The MQTT QoS level
+  qos: 0
+cache:
+  # Timeout. Each received metric will be presented for this time if no update is send via MQTT.
+  # Set the timeout to -1 to disable the deletion of metrics from the cache. The exporter presents the ingest timestamp
+  # to prometheus.
+  timeout: 10s
+metrics:
+  - prom_name: CT1
+    mqtt_name: CT1
+    help: Current sensor 1
+    type: gauge
+    const_labels:
+      sensor_type: current
+  - prom_name: CT2
+    mqtt_name: CT2
+    help: Current sensor 2
+    type: gauge
+    const_labels:
+      sensor_type: current
+  - prom_name: totI
+    mqtt_name: totI
+    help: Total current
+    type: gauge
+    const_labels:
+      sensor_type: current
+  - prom_name: totV
+    mqtt_name: totV
+    help: Voltage
+    type: gauge
+    const_labels:
+      sensor_type: voltage
+  - prom_name: W
+    mqtt_name: W
+    help: Power
+    type: gauge
+    const_labels:
+      sensor_type: power
+  - prom_name: PF
+    mqtt_name: PF
+    help: Power factor
+    type: gauge
+    const_labels:
+      sensor_type: power
+  - prom_name: temp
+    mqtt_name: temp
+    help: Temperature
+    type: gauge
+    const_labels:
+      sensor_type: temperature
+  - prom_name: freq
+    mqtt_name: freq
+    help: Frequency
+    type: gauge
+    const_labels:
+      sensor_type: frequency

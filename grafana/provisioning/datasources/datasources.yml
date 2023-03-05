@@ -1,0 +1,24 @@
+# For more details about grafana provisioning read this
+# https://grafana.com/docs/grafana/latest/administration/provisioning/
+apiVersion: 1
+
+datasources:
+  - name: prometheus
+    type: prometheus
+    url: http://prometheus:9090
+  - name: emonESP-data
+    type: marcusolsson-json-datasource
+    uid: P92B644284CE591E4
+    url: http://$EMONESP_IP/lastvalues
+    basicAuth: true
+    basicAuthUser: $EMONESP_USER
+    secureJsonData:
+      basicAuthPassword: $EMONESP_PASS
+  - name: emonESP-status
+    type: marcusolsson-json-datasource
+    uid: PE042E3BA48FAA870
+    url: http://$EMONESP_IP/status
+    basicAuth: true
+    basicAuthUser: $EMONESP_USER
+    secureJsonData:
+      basicAuthPassword: $EMONESP_PASS
