@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "emonESP-data",
+      "name": "DS_EMONESP-DATA",
       "label": "emonESP-data",
       "description": "",
       "type": "datasource",
@@ -9,7 +9,7 @@
       "pluginName": "JSON API"
     },
     {
-      "name": "emonESP-status",
+      "name": "DS_EMONESP-STATUS",
       "label": "emonESP-status",
       "description": "",
       "type": "datasource",
@@ -25,14 +25,14 @@
       "pluginName": "Prometheus"
     },
     {
-      "name": "__expr__",
-      "label": "__expr__",
+      "name": "DS_EXPRESSION",
+      "label": "Expression",
       "description": "",
       "type": "datasource",
       "pluginId": "__expr__"
     }
   ],
-  "__elements": [],
+  "__elements": {},
   "__requires": [
     {
       "type": "datasource",
@@ -46,22 +46,10 @@
       "version": ""
     },
     {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.4.5"
+      "version": "10.2.3"
     },
     {
       "type": "datasource",
@@ -98,7 +86,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -122,6 +113,10 @@
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "RZkERlUnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -130,6 +125,15 @@
       },
       "id": 12,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "RZkERlUnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Latest Data",
       "type": "row"
     },
@@ -155,7 +159,7 @@
                 "value": null
               },
               {
-                "color": "green",
+                "color": "light-green",
                 "value": 100
               },
               {
@@ -197,13 +201,16 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 5,
+        "h": 6,
+        "w": 4,
         "x": 0,
         "y": 1
       },
       "id": 2,
       "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -212,11 +219,10 @@
           "fields": "/^W$/",
           "values": false
         },
-        "showThresholdLabels": true,
-        "showThresholdMarkers": true,
-        "text": {}
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -244,7 +250,7 @@
         }
       ],
       "title": "Power",
-      "type": "gauge"
+      "type": "stat"
     },
     {
       "datasource": {
@@ -289,9 +295,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 2,
-        "x": 5,
+        "h": 6,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "id": 3,
@@ -307,9 +313,10 @@
           "fields": "/^totV$/",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -377,9 +384,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 7,
+        "h": 3,
+        "w": 4,
+        "x": 8,
         "y": 1
       },
       "id": 4,
@@ -395,9 +402,10 @@
           "fields": "/^CT1$/",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -420,6 +428,91 @@
         }
       ],
       "title": "Current CT1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "marcusolsson-json-datasource",
+        "uid": "P92B644284CE591E4"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.25
+              },
+              {
+                "color": "light-green",
+                "value": 0.75
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^PF$/",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "cacheDurationSeconds": 0,
+          "datasource": {
+            "type": "marcusolsson-json-datasource",
+            "uid": "P92B644284CE591E4"
+          },
+          "fields": [
+            {
+              "jsonPath": "$.PF",
+              "name": "",
+              "type": "number"
+            }
+          ],
+          "hide": false,
+          "method": "GET",
+          "queryParams": "",
+          "refId": "PF",
+          "urlPath": ""
+        }
+      ],
+      "title": "Power Factor",
       "type": "stat"
     },
     {
@@ -473,9 +566,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 9,
+        "h": 3,
+        "w": 4,
+        "x": 16,
         "y": 1
       },
       "id": 5,
@@ -491,9 +584,10 @@
           "fields": "/^freq$/",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -521,88 +615,6 @@
     {
       "datasource": {
         "type": "marcusolsson-json-datasource",
-        "uid": "P92B644284CE591E4"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 0
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.25
-              },
-              {
-                "color": "green",
-                "value": 0.75
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 5,
-        "x": 11,
-        "y": 1
-      },
-      "id": 9,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/^PF$/",
-          "values": false
-        },
-        "showThresholdLabels": true,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "8.4.5",
-      "targets": [
-        {
-          "cacheDurationSeconds": 0,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "P92B644284CE591E4"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.PF",
-              "name": "",
-              "type": "number"
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "PF",
-          "urlPath": ""
-        }
-      ],
-      "title": "Power Factor",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
         "uid": "PE042E3BA48FAA870"
       },
       "fieldConfig": {
@@ -612,16 +624,49 @@
           },
           "custom": {
             "align": "center",
-            "displayMode": "auto",
-            "filterable": true
+            "cellOptions": {
+              "type": "color-background"
+            },
+            "filterable": false,
+            "inspect": false
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "false": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "Disconnected"
+                },
+                "true": {
+                  "color": "semi-dark-green",
+                  "index": 0,
+                  "text": "Connected"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "pattern": ".*",
+                "result": {
+                  "color": "semi-dark-blue",
+                  "index": 2
+                }
+              },
+              "type": "regex"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -629,14 +674,17 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 6,
         "w": 4,
-        "x": 16,
+        "x": 20,
         "y": 1
       },
       "id": 8,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
+          "enablePagination": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -645,7 +693,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -655,13 +703,16 @@
           },
           "fields": [
             {
-              "jsonPath": "$.[*~]",
-              "name": "Keys"
+              "jsonPath": "$.ipaddress",
+              "language": "jsonpath",
+              "name": "IP",
+              "type": "string"
             },
             {
-              "jsonPath": "$.[*]",
+              "jsonPath": "$.mqtt_connected",
               "language": "jsonpath",
-              "name": "Values"
+              "name": "MQTT",
+              "type": "boolean"
             }
           ],
           "hide": false,
@@ -672,80 +723,7 @@
         }
       ],
       "title": "emonESP Satus",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "P92B644284CE591E4"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "displayMode": "auto",
-            "filterable": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "id": 7,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "8.4.5",
-      "targets": [
-        {
-          "cacheDurationSeconds": 0,
-          "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "P92B644284CE591E4"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.[*~]",
-              "name": "Keys"
-            },
-            {
-              "jsonPath": "$.[*]",
-              "language": "jsonpath",
-              "name": "Values"
-            }
-          ],
-          "hide": false,
-          "method": "GET",
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": ""
-        }
-      ],
-      "title": "Latest Data",
+      "transformations": [],
       "type": "table"
     },
     {
@@ -791,10 +769,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 7,
-        "y": 6
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 4
       },
       "id": 10,
       "options": {
@@ -809,9 +787,10 @@
           "fields": "/^CT2$/",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -884,10 +863,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 9,
-        "y": 6
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 4
       },
       "id": 6,
       "options": {
@@ -902,9 +881,10 @@
           "fields": "/^temp$/",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "cacheDurationSeconds": 0,
@@ -931,35 +911,56 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "RZkERlUnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 7
       },
       "id": 14,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "RZkERlUnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Historical Data",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 45,
-            "gradientMode": "hue",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -979,56 +980,26 @@
               "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-blue",
                 "value": null
               }
             ]
           },
           "unit": "watt"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "CT1"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Power"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 11,
+        "h": 11,
+        "w": 12,
         "x": 0,
-        "y": 12
+        "y": 8
       },
       "id": 18,
       "options": {
@@ -1037,7 +1008,8 @@
             "last"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -1048,118 +1020,39 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "W{instance=\"mqtt2prometheus:9641\"}",
           "interval": "",
           "legendFormat": "Power",
-          "refId": "A"
+          "refId": "power"
         }
       ],
       "title": "Power",
       "type": "timeseries"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "watt"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 2,
-        "x": 11,
-        "y": 12
-      },
-      "id": 19,
-      "options": {
-        "displayMode": "lcd",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": false,
-        "text": {}
-      },
-      "pluginVersion": "8.4.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "exemplar": true,
-          "expr": "W{sensor=\"W\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "P",
-          "refId": "A"
-        }
-      ],
-      "title": "MAX-AVG-MIN",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "includeTimeField": false,
-            "mode": "reduceFields",
-            "reducers": [
-              "max",
-              "mean",
-              "min"
-            ]
-          }
-        },
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "(.*)",
-            "renamePattern": " "
-          }
-        }
-      ],
-      "type": "bargauge"
-    },
-    {
       "datasource": {
-        "type": "__expr__",
-        "uid": "__expr__"
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
       },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "fixed",
+            "mode": "thresholds",
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
-            "fillOpacity": 100,
-            "gradientMode": "none",
+            "fillOpacity": 80,
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1168,43 +1061,58 @@
             "lineWidth": 1,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "semi-dark-green",
                 "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 150
+              },
+              {
+                "color": "dark-red",
+                "value": 250
               }
             ]
           },
-          "unit": "kwatth"
+          "unit": "watth"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 11,
-        "x": 13,
-        "y": 12
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 8
       },
       "id": 20,
       "options": {
         "barRadius": 0,
-        "barWidth": 1,
+        "barWidth": 0.9,
+        "colorByField": "energy {__name__=\"W\", instance=\"mqtt2prometheus:9641\", job=\"prometheus\", sensor=\"W\", sensor_type=\"power\", topic=\"emon/emonesp/W\"}",
+        "fullHighlight": false,
         "groupWidth": 1,
         "legend": {
           "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
         "orientation": "auto",
-        "showValue": "auto",
+        "showValue": "always",
         "stacking": "none",
         "tooltip": {
-          "mode": "single",
+          "mode": "none",
           "sort": "none"
         },
         "xTickLabelRotation": 0,
@@ -1215,7 +1123,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "W{instance=\"mqtt2prometheus:9641\"}",
@@ -1225,66 +1133,40 @@
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "P",
-          "refId": "Power"
+          "refId": "power"
         },
         {
-          "conditions": [],
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "downsampler": "mean",
-          "expression": "Power",
-          "hide": true,
-          "refId": "P_1h_AVG",
-          "type": "resample",
-          "upsampler": "fillna",
-          "window": "1h"
-        },
-        {
-          "conditions": [
-            {
-              "evaluator": {
-                "params": [
-                  0,
-                  0
-                ],
-                "type": "gt"
-              },
-              "operator": {
-                "type": "and"
-              },
-              "query": {
-                "params": []
-              },
-              "reducer": {
-                "params": [],
-                "type": "avg"
-              },
-              "type": "query"
-            }
-          ],
-          "datasource": {
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "$P_1h_AVG/1000",
+          "downsampler": "last",
+          "expression": "power",
           "hide": false,
-          "refId": "kWh",
-          "type": "math"
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
         }
       ],
-      "title": "Energy consumption (1h avg)",
+      "title": "Energy Consumption",
       "transformations": [],
       "type": "barchart"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
@@ -1297,6 +1179,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -1355,7 +1238,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 24
+        "y": 19
       },
       "id": 17,
       "options": {
@@ -1364,7 +1247,8 @@
             "last"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -1375,7 +1259,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "totV{sensor=\"totV\"}",
@@ -1387,7 +1271,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "freq{sensor=\"freq\"}",
@@ -1401,12 +1285,19 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
@@ -1419,6 +1310,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -1456,7 +1348,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 24
+        "y": 19
       },
       "id": 16,
       "options": {
@@ -1465,7 +1357,8 @@
             "last"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -1476,7 +1369,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "CT1{sensor=\"CT1\"}",
@@ -1487,7 +1380,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "CT2{sensor=\"CT2\"}",
@@ -1499,7 +1392,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "totI{sensor=\"totI\"}",
@@ -1514,13 +1407,16 @@
     },
     {
       "datasource": {
-        "type": "__expr__",
-        "uid": "__expr__"
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "fixed"
+            "fixedColor": "green",
+            "mode": "fixed",
+            "seriesBy": "last"
           },
           "mappings": [],
           "thresholds": {
@@ -1532,7 +1428,7 @@
               }
             ]
           },
-          "unit": "kwatth"
+          "unit": "watth"
         },
         "overrides": []
       },
@@ -1540,12 +1436,12 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 24
+        "y": 19
       },
-      "id": 22,
+      "id": 24,
       "options": {
-        "colorMode": "none",
-        "graphMode": "none",
+        "colorMode": "value",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1553,63 +1449,56 @@
             "lastNotNull"
           ],
           "fields": "",
-          "limit": 1,
-          "values": true
+          "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "W{instance=\"mqtt2prometheus:9641\"}",
-          "format": "table",
+          "format": "time_series",
           "hide": true,
           "instant": false,
           "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
         },
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "downsampler": "mean",
-          "expression": "A",
+          "downsampler": "last",
+          "expression": "power",
           "hide": true,
-          "refId": "B",
+          "refId": "energy",
           "type": "resample",
-          "upsampler": "fillna",
+          "upsampler": "backfilling",
           "window": "1h"
         },
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "expression": "$B/1000",
-          "hide": true,
-          "refId": "C",
-          "type": "math"
-        },
-        {
-          "datasource": {
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "C",
+          "downsampler": "sum",
+          "expression": "energy",
           "hide": false,
           "reducer": "sum",
-          "refId": "D",
+          "refId": "total_energy",
           "settings": {
             "mode": "dropNN"
           },
-          "type": "reduce"
+          "type": "reduce",
+          "upsampler": "fillna"
         }
       ],
       "title": "Total energy consumption",
@@ -1618,13 +1507,16 @@
     },
     {
       "datasource": {
-        "type": "__expr__",
-        "uid": "__expr__"
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-reds"
+            "fixedColor": "light-green",
+            "mode": "continuous-blues",
+            "seriesBy": "last"
           },
           "mappings": [],
           "thresholds": {
@@ -1644,12 +1536,12 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 24
+        "y": 19
       },
-      "id": 23,
+      "id": 25,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
+        "colorMode": "background_solid",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1657,76 +1549,730 @@
             "lastNotNull"
           ],
           "fields": "",
-          "limit": 1,
-          "values": true
+          "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.4.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "PE012E3BA48FBB875"
           },
           "exemplar": true,
           "expr": "W{instance=\"mqtt2prometheus:9641\"}",
-          "format": "table",
+          "format": "time_series",
           "hide": true,
           "instant": false,
           "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
         },
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "downsampler": "mean",
-          "expression": "A",
+          "downsampler": "last",
+          "expression": "power",
           "hide": true,
-          "refId": "B",
+          "refId": "energy",
           "type": "resample",
-          "upsampler": "fillna",
+          "upsampler": "backfilling",
           "window": "1h"
         },
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "expression": "B",
+          "downsampler": "sum",
+          "expression": "energy",
           "hide": true,
           "reducer": "sum",
-          "refId": "D",
+          "refId": "total_energy",
           "settings": {
             "mode": "dropNN"
           },
-          "type": "reduce"
+          "type": "reduce",
+          "upsampler": "fillna"
         },
         {
           "datasource": {
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
-          "expression": "($D/1000)*0.24028",
+          "expression": "($total_energy/1000)*$kwh_price",
           "hide": false,
-          "refId": "C",
+          "refId": "cost",
           "type": "math"
         }
       ],
-      "title": "Cost for period of time",
+      "title": "Total Cost",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 26,
+      "panels": [],
+      "title": "Energy Consumption by Month",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "title": "Current Month",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "timeShift": "1M/M",
+      "title": "-1M",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "timeShift": "2M/M",
+      "title": "-2M",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "timeShift": "3M/M",
+      "title": "-3M",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "timeShift": "4M/M",
+      "title": "-4M",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PE012E3BA48FBB875"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 28
+      },
+      "hideTimeOverride": true,
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PE012E3BA48FBB875"
+          },
+          "exemplar": true,
+          "expr": "W{instance=\"mqtt2prometheus:9641\"}",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "P",
+          "refId": "power"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "last",
+          "expression": "power",
+          "hide": true,
+          "refId": "energy",
+          "type": "resample",
+          "upsampler": "backfilling",
+          "window": "1h"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "${DS_EXPRESSION}"
+          },
+          "downsampler": "sum",
+          "expression": "energy",
+          "hide": false,
+          "reducer": "sum",
+          "refId": "total_energy",
+          "settings": {
+            "mode": "dropNN"
+          },
+          "type": "reduce",
+          "upsampler": "fillna"
+        }
+      ],
+      "timeFrom": "0M/M",
+      "timeShift": "5M/M",
+      "title": "-5M",
       "transformations": [],
       "type": "stat"
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 35,
-  "style": "dark",
+  "refresh": "",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "0.28",
+          "value": "0.28"
+        },
+        "description": "",
+        "hide": 0,
+        "label": "Electricity price per 1 KWh (Eur)",
+        "name": "kwh_price",
+        "options": [
+          {
+            "selected": true,
+            "text": "0.28",
+            "value": "0.28"
+          }
+        ],
+        "query": "0.28",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
@@ -1736,6 +2282,6 @@
   "timezone": "",
   "title": "Energy monitor",
   "uid": "fZJWugNVk",
-  "version": 29,
+  "version": 48,
   "weekStart": ""
 }

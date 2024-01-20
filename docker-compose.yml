@@ -1,12 +1,14 @@
-version: '3'
-services:
+version: "3"
 
+services:
   grafana:
+    entrypoint: /bin/bash -c "grafana cli plugins install marcusolsson-json-datasource && /run.sh"
+    image: grafana/grafana:10.2.3
     container_name: grafana
     hostname: grafana
-    image: grafana/grafana:8.4.5
-    user: "${UID}:${GID}"
+    user: "1000:1000"
     environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASS}
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
       - GF_PATHS_DATA=/var/lib/grafana
@@ -18,62 +20,62 @@ services:
       - EMONESP_USER=${EMONESP_USER}
       - EMONESP_PASS=${EMONESP_PASS}
       - TZ=${TZ}
-    ports:
-      - 3000:3000
-    networks:
-      - emonesp_mon_network
-    restart: unless-stopped
     volumes:
       - ./grafana/data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - emonesp_mon_network
+    ports:
+      - 3000:3000
+    restart: unless-stopped
 
   prometheus:
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=1y' # How long historical data should be saved
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=1y" # How long historical data should be saved
+    image: prom/prometheus:latest
     container_name: prometheus
     hostname: prometheus
-    image: prom/prometheus:latest
-    user: "${UID}:${GID}"
+    user: "1000:1000"
     environment:
       - TZ=${TZ}
-    ports:
-      - 9090:9090
-    networks:
-      - emonesp_mon_network
-    restart: unless-stopped
     volumes:
       - ./prometheus/data:/prometheus
       - ./prometheus/config:/etc/prometheus
+    networks:
+      - emonesp_mon_network
+    ports:
+      - 9090:9090
+    restart: unless-stopped
 
   mosquitto:
+    image: eclipse-mosquitto:latest
     container_name: mosquitto
     hostname: mosquitto
-    image: eclipse-mosquitto:latest
-    user: "${UID}:${GID}"
+    user: "1000:1000"
     environment:
       - TZ=${TZ}
-    ports:
-      - 1883:1883
-    networks:
-      - emonesp_mon_network
-    restart: unless-stopped
     volumes:
       - ./mosquitto:/mosquitto
+    networks:
+      - emonesp_mon_network
+    ports:
+      - 1883:1883
+    restart: unless-stopped
 
   mqtt2prometheus:
+    image: ghcr.io/hikhvar/mqtt2prometheus:latest
     container_name: mqtt2prometheus
     hostname: mqtt2prometheus
-    image: ghcr.io/hikhvar/mqtt2prometheus:latest
-    user: "${UID}:${GID}"
+    user: "1000:1000"
     environment:
       - TZ=${TZ}
+    volumes:
+      - ./mqtt2prometheus/prometheus2mqtt_config.yaml:/config.yaml
     networks:
       - emonesp_mon_network
     restart: unless-stopped
-    volumes:
-      - ./mqtt2prometheus/prometheus2mqtt_config.yaml:/config.yaml
 
 networks:
   emonesp_mon_network:

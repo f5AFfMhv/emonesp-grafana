@@ -15,11 +15,11 @@ graph LR
     A((EmonESP)) -- HTTP --> E(grafana);
 ```
 
-EmonESP publishing data to mosquitto MQTT server. [mqtt2prometheus](https://github.com/hikhvar/mqtt2prometheus) is subscribed to EmonESP topics and  exports received data for prometheus which stores it as time series data. Grafana uses prometheus as data source to read historical power usage and calculate avg energy consumption and cost for period of time. Grafana also uses EmonESP API to query and display latest measured data and device status.
+EmonESP publishing data to mosquitto MQTT server. [mqtt2prometheus](https://github.com/hikhvar/mqtt2prometheus) is subscribed to EmonESP topics and exports received data for prometheus which stores it as time series data. Grafana uses prometheus as data source to read historical power usage and calculate avg energy consumption and cost for period of time. Grafana also uses EmonESP API to query and display latest measured data and device status.
 
 ## Installation
 
-![emonesp grafana dashboard](https://i.imgur.com/vxFfOCj.png)
+![emonesp grafana dashboard](https://imgur.com/kTLgp5m.png)
 
 ### Requirements
 
@@ -38,15 +38,15 @@ EmonESP publishing data to mosquitto MQTT server. [mqtt2prometheus](https://gith
 3. Fill correct information in `.env` file.
 
 4. Look at each stack component configuration file and change it to your needs:
-   
-   * `energy_monitor.json` line 1713 contains energy price in euros. You can change it here or later in grafana dashboard.
-   
-   * `mosquitto.conf` file is default, authentication and SSL/TLS are disabled.
-   
-   * MQTT base-topic in EmonESP should be `emon/emonesp`, but if you use something different update `prometheus2mqtt_config.yaml`
 
-5. Run `docker-compose up -d`.
+   - `mosquitto.conf` file is default, authentication and SSL/TLS are disabled.
 
-Grafana webUI should be accessible on port 3000, default login is `admin` and password `admin`. 
+   - MQTT base-topic in EmonESP should be `emon/emonesp`, but if you use something different update `prometheus2mqtt_config.yaml`
 
-Select Dashboards menu > browse dashboards >  `Energy monitor`.
+5. Run `docker compose up -d`.
+
+Grafana webUI should be accessible on port 3000, default login is `admin` and password is taken from `.env`.
+
+Select Dashboards menu > browse dashboards > `Energy monitor`.
+
+Energy price per kWh is set via grafana variable (top left corner).
